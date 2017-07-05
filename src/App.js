@@ -1,8 +1,22 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
-import { Route } from 'react-router-dom'
+
+import { Route, Link } from 'react-router-dom'
+
+// Import components
 import Searchbar from './Searchbar'
+import Bookshelf from './Bookshelf'
+
+// Import css styles
 import './App.css'
+
+/**
+TODO:
+1) Breakdown bookshelf into 3 categories
+2) Setup state function to handle moving books
+3) Update CSS, add more functionality
+**/
+
 
 class BooksApp extends React.Component {
   state = {
@@ -12,15 +26,21 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: true
   }
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <Searchbar />
+          <div>
+            <Bookshelf />
+            <div className="open-search">
+              <Link to="/search">Add a book</Link>
+            </div>
+          </div>
         )} />
+
+        <Route exact path="/search" render={() => ( <Searchbar />)} />
       
         </div> )
   }
