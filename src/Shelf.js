@@ -18,14 +18,13 @@ class Shelf extends React.Component {
 		})
 
 		return (
-			<div className="bookshelf">
-              <h2 className="bookshelf-title">Currently Reading</h2>
+			
               <div className="bookshelf-books">
                 <ol className="books-grid">
                   {books}
                 </ol>
               </div>
-            </div>
+           
 		)
 	}
 }

@@ -12,21 +12,20 @@ import Shelf from './Shelf'
 
 class Bookshelf extends React.Component {
 
-	render() {
-		return (
-			<div className="list-books">
-	            <div className="list-books-title">
-	              <h1>MyReads</h1>
-	            </div>
+	constructor() {
+		super()
+	}
 
+	render() {
+		const { shelfTitle } = this.props
+		return (
+		
 	            <div className="list-books-content">
-		              <div>
+		              <div className="bookshelf">
+              				<h2 className="bookshelf-title">{shelfTitle}</h2>
 		                <Shelf />
 			        </div>
 	        	</div>
-            </div>
-
-
 		)
 	}
 
