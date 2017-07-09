@@ -172,3 +172,25 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/** extra customization **/
+
+.showing-books {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.showing-books button {
+  background: #60ac5d;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 5px;
+  font-size: inherit;
+}
+
+.showing-books button:hover {
+  color: lightgray;
+  background: black;
+}
+

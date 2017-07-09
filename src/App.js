@@ -4,7 +4,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 
 // Import components
-import Searchbar from './Searchbar'
+import Searchlibrary from './Searchlibrary'
 import Bookshelf from './Bookshelf'
 
 // Import css styles
@@ -30,8 +30,8 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    var bookshelves = this.state.bookShelves.map((bookshelf) => (
-      <Bookshelf shelfTitle={bookshelf} /> ));
+    var bookshelves = this.state.bookShelves.map((bookshelf, index) => (
+      <Bookshelf key={index} shelfTitle={bookshelf} /> ));
 
     return (
       <div className="app">
@@ -48,7 +48,7 @@ class BooksApp extends React.Component {
           </div>
         )} />
 
-        <Route exact path="/search" render={() => ( <Searchbar />)} />
+        <Route exact path="/search" render={() => ( <Searchlibrary />)} />
       
         </div> )
   }

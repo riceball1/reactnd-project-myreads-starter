@@ -12,10 +12,6 @@ import Shelf from './Shelf'
 
 class Bookshelf extends React.Component {
 
-	constructor() {
-		super()
-	}
-
 	render() {
 		const { shelfTitle } = this.props
 		return (
