@@ -1,15 +1,13 @@
 import React from 'react'
-// import Searchbar from './Searchbar'
 import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types';
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
+import escapeRegExp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 import Book from './Book'
-import * as BooksAPI from './BooksAPI'
+// import * as BooksAPI from './BooksAPI'
 
 class Searchlibrary extends React.Component {
 	state = {
-		library: [],
 		query: ""
 	}
 
@@ -18,9 +16,9 @@ class Searchlibrary extends React.Component {
 	// }
 
 	componentDidMount() {
-		BooksAPI.getAll().then((books) => {
-			this.setState({library: this.state.library.concat(books)})
-		})
+		// BooksAPI.getAll().then((books) => {
+		// 	this.setState({library: this.state.library.concat(books)})
+		// })
 	}
 
 	searchBooks(query) {
@@ -28,11 +26,12 @@ class Searchlibrary extends React.Component {
 	}
 
 	clearSearch = (query) => {
-		this.setState({query: ""});
+		this.setState({query: ""})
 	}
 
 	render() {
-		const {library, query} = this.state
+		const {query} = this.state
+		const {library} = this.props
 		let showingBooks;
 		if (query) {
 			// match query
