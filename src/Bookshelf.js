@@ -19,7 +19,7 @@ class Bookshelf extends React.Component {
 	            <div className="list-books-content">
 		              <div className="bookshelf">
               				<h2 className="bookshelf-title">{shelfTitle}</h2>
-		                <Shelf books={books} />
+		                <Shelf books={books}/>
 			        </div>
 	        	</div>
 		)

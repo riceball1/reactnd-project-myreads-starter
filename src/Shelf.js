@@ -9,9 +9,10 @@ class Shelf extends React.Component {
 
 		const {books} = this.props
 		let booksList = books.map((book, index) => {
+			console.log(book.imageLinks.thumbnail);
 			return (
 				<li key={book.title+index}>
-					<Book author={book.authors} imageURL={book.imageURL}  key={book.author+index}/>
+					<Book author={book.authors} image={book.imageLinks.thumbnail}  key={book.author+index}/>
 				</li>
 			)
 		})

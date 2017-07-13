@@ -46,7 +46,7 @@ class Searchlibrary extends React.Component {
 		showingBooks.sort(sortBy('title'));
 
 		let librarycontent = showingBooks.map((book, index) => (
-			<Book author={book.authors.join(',\n ')} image={""} title={book.title} key={index} />
+			<Book author={book.authors.join(',\n ')} image={book.imageLinks.thumbnail} title={book.title} key={index} />
 		))
 		return (
 			<div className="search-books">
