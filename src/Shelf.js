@@ -1,18 +1,20 @@
 import React from 'react'
 import Book from './Book'
+import PropTypes from 'prop-types'
 
 class Shelf extends React.Component {
 
+	static propTypes = {
+	    books: PropTypes.array.isRequired
+	  }
+
 
 	render() {
-		
-
 		const {books} = this.props
 		let booksList = books.map((book, index) => {
-			console.log(book.imageLinks.thumbnail);
 			return (
 				<li key={book.title+index}>
-					<Book author={book.authors} image={book.imageLinks.thumbnail}  key={book.author+index}/>
+					<Book author={book.authors} image={book.imageLinks.thumbnail}  key={book.author+index} title={book.title}/>
 				</li>
 			)
 		})

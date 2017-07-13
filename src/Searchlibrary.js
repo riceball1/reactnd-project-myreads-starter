@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 import Book from './Book'
@@ -11,14 +11,12 @@ class Searchlibrary extends React.Component {
 		query: ""
 	}
 
-	// static propTypes = {
-	// 	// add proptypes for this.props
-	// }
+	static propTypes = {
+		library: PropTypes.array.isRequired
+	}
 
 	componentDidMount() {
-		// BooksAPI.getAll().then((books) => {
-		// 	this.setState({library: this.state.library.concat(books)})
-		// })
+		
 	}
 
 	searchBooks(query) {
@@ -46,7 +44,7 @@ class Searchlibrary extends React.Component {
 		showingBooks.sort(sortBy('title'));
 
 		let librarycontent = showingBooks.map((book, index) => (
-			<Book author={book.authors.join(',\n ')} image={book.imageLinks.thumbnail} title={book.title} key={index} />
+			<Book author={book.authors} image={book.imageLinks.thumbnail} title={book.title} key={index} />
 		))
 		return (
 			<div className="search-books">

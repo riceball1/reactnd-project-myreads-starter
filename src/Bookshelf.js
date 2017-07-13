@@ -1,16 +1,13 @@
 import React from 'react'
 import Shelf from './Shelf'
-
-/**
-
-	TODO:
-	- Add prototypes
-	- Add dynamic data
-
- */
-
+import PropTypes from 'prop-types';
 
 class Bookshelf extends React.Component {
+
+	static propTypes = {
+		books: PropTypes.array.isRequired,
+		shelfTitle: PropTypes.string.isRequired
+	}
 
 	render() {
 		const { shelfTitle, books } = this.props
