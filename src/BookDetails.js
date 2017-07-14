@@ -1,11 +1,13 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-// import * as BooksAPI from './BooksAPI'
-
-
 
 class BookDetails extends React.Component {
+
+	static propTypes = {
+		bookTitle: PropTypes.string.isRequired
+	}
+
 	 render() {
 	 	const {bookTitle} = this.props
 	 	return (

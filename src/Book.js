@@ -1,25 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-// import * as BooksAPI from './BooksAPI'
 
 class Book extends React.Component {
 
-
   static propTypes = {
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     title: PropTypes.string.isRequired,
-    author: PropTypes.array.isRequired
+    authors: PropTypes.string
   }
 
-// authors was returning undefined so I used a ternary operator to check
-
+  // authors was returning undefined so I used a ternary operator at book-authors
+  // added Link for book image to get more details about book
   render() {
       const { author, image, title, id, optionState, moveBook } = this.props
       return (
         <div className="book">
           <div className="book-top">
-          <Link to="/details/{id}">
+          <Link to={`/details/${id}`} bookId={id}>
             <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${image}")` }}></div>
             </Link>
             <div className="book-shelf-changer">

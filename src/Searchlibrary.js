@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import PropTypes from 'prop-types';
-// import escapeRegExp from 'escape-string-regexp'
-// import sortBy from 'sort-by'
+import PropTypes from 'prop-types';
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 
@@ -13,16 +11,21 @@ class Searchlibrary extends React.Component {
 		results: []
 	}
 
-	// static propTypes = {
-	// 	library: PropTypes.array.isRequired
-	// }
-
-	// componentWillReceiveProps(nextProps) {
-	// 	console.log('Searchlibrary updated', nextProps)
-	// }
+	static propTypes = {
+		moveBook: PropTypes.func.isRequired
+	}
 
 	searchBooks(query) {
-		
+		/** 
+			1) issue after clearing or searching for an item that cannot be found:
+				example: bekey
+				Uncaught (in promise) TypeError: Cannot read property 'thumbnail' of undefined
+			    at http://localhost:3000/static/js/bundle.js:37184:106
+			    at Array.map (native)
+			    at Searchlibrary.render 
+			2) Cannot search for names like 'Game On' sends back empty query error
+
+		**/
 		this.setState({query: query})
 		if(query === undefined || query === "") {
 			return this.setState({query: "", results: []})
@@ -32,7 +35,7 @@ class Searchlibrary extends React.Component {
 			if(res === undefined || res.error === 'empty query') {
 				return this.setState({results: []})
 			}
-			this.setState({results: res})
+			return this.setState({results: res})
 		})
 		
 	}

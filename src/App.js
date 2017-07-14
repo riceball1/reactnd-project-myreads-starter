@@ -10,26 +10,22 @@ import BookDetails from './BookDetails'
 // Import css styles
 import './App.css'
 
-/**
-TODO:
-1) Breakdown bookshelf into 3 categories
-2) Setup state function to handle moving books
-3) Update CSS, add more functionality
-**/
-
 
 class BooksApp extends React.Component {
+  // setup bookshelf categories and library state
   state = {
      library: [],
-     bookShelves: [ "currentlyReading", "wantToRead", "read"]
+     bookShelves: [ "currentlyReading","wantToRead", "read"]
   }
 
+  // setup library when component is mounted
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({library: this.state.library.concat(books)})
     })
   }
 
+  // function to move books between categories
   moveBook(id, newShelf) {
     const {library} = this.state;
     BooksAPI.get(id).then((book) => {
@@ -74,11 +70,15 @@ class BooksApp extends React.Component {
   render() {
     const {library, bookShelves} = this.state;
 
+    // render each bookshelf and pass down props to children components
+    let bookshelves = bookShelves.map((bookshelf, index)=> {
+      // used a reg expression - was trying to use an object, but maybe there's a better way to display the shelf names?
+        let result = bookshelf.replace( /([A-Z])/g, " $1")
+        let shelfTitle = result.charAt(0).toUpperCase() + result.slice(1)
+        return <Bookshelf key={index} shelfTitle={shelfTitle} books={library.filter((book, index) => ( bookshelf === book.shelf))} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>
+    });
 
-    let bookshelves = bookShelves.map((bookshelf, index) => (
-        <Bookshelf key={index} shelfTitle={bookshelf} books={library.filter(book => (bookshelf === book.shelf))} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>
-    ));
-
+    // set up routing for main page, search page and book details page
     return (
       <div className="app">
         <Route exact path="/" render={() => (
@@ -96,8 +96,9 @@ class BooksApp extends React.Component {
 
         <Route exact path="/search" render={() => ( <Searchlibrary library={library} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>)} />
       
-        <Route path="/details/:id" render={() => (<BookDetails bookTitle={"Title Here"}/>
-          )} />
+        <Route path="/details/:bookId" render={()=> (
+          <BookDetails bookTitle="Book Title" />)}
+        />
 
         </div> )
 
