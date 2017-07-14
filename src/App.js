@@ -5,6 +5,7 @@ import { Route, Link } from 'react-router-dom'
 // Import components
 import Searchlibrary from './Searchlibrary'
 import Bookshelf from './Bookshelf'
+import BookDetails from './BookDetails'
 
 // Import css styles
 import './App.css'
@@ -37,7 +38,7 @@ class BooksApp extends React.Component {
     })
     .then((book) => {
       BooksAPI.update(book, newShelf)
-        .then((shelf) => {
+        .then((newBooks) => {
           BooksAPI.get(id).then((book) => {
             return book
         })
@@ -54,7 +55,7 @@ class BooksApp extends React.Component {
          ]
          // updates the state with the new library changes
          this.setState({library: newLibrary})
-          return shelf
+          return newBooks
         })
       })
     })
@@ -63,9 +64,6 @@ class BooksApp extends React.Component {
         console.error('Error message: ', e)
       }
     })
-
-
-    
   }
 
   render() {
@@ -93,7 +91,13 @@ class BooksApp extends React.Component {
 
         <Route exact path="/search" render={() => ( <Searchlibrary library={library} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>)} />
       
+        <Route path="/details/:id" render={() => (<BookDetails bookTitle={"Title Here"}/>
+          )} />
+
         </div> )
+
+
+
   }
 }
 
