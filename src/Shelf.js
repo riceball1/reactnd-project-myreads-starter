@@ -10,11 +10,11 @@ class Shelf extends React.Component {
 
 
 	render() {
-		const {books} = this.props
+		const {books, moveBook} = this.props
 		let booksList = books.map((book, index) => {
 			return (
 				<li key={book.title+index}>
-					<Book author={book.authors} image={book.imageLinks.thumbnail}  key={book.author+index} title={book.title}/>
+					<Book author={book.authors} image={book.imageLinks.thumbnail}  key={book.id} title={book.title} id={book.id} optionState={book.shelf} moveBook={moveBook}/>
 				</li>
 			)
 		})

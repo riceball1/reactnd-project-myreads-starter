@@ -29,12 +29,51 @@ class BooksApp extends React.Component {
     })
   }
 
+  moveBook(id, newShelf) {
+    console.log(id, newShelf)
+    const {library} = this.state;
+    BooksAPI.get(id).then((book) => {
+      return book
+    })
+    .then((book) => {
+      BooksAPI.update(book, newShelf)
+        .then((shelf) => {
+          BooksAPI.get(id).then((book) => {
+            return book
+        })
+        // set new state with updated book
+        .then((updatedBook) => {
+          const index = library.findIndex((item) => {
+            return item.id === updatedBook.id
+          })
+          // updated item
+          let newLibrary = [
+         ...library.slice(0,index),
+         updatedBook,
+         ...library.slice(index+1)
+         ]
+         // updates the state with the new library changes
+         this.setState({library: newLibrary})
+          return shelf
+        })
+      })
+    })
+    .catch((e) => {
+      if(e) {
+        console.error('Error message: ', e)
+      }
+    })
+
+
+    
+  }
+
   render() {
     const {library, bookShelves} = this.state;
 
 
     let bookshelves = bookShelves.map((bookshelf, index) => (
-        <Bookshelf key={index} shelfTitle={bookshelf} books={library.filter(book => (bookshelf === book.shelf))}/>
+        <Bookshelf key={index} shelfTitle={bookshelf} books={library.filter(book => (bookshelf === book.shelf))} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>
     ));
 
     return (
@@ -52,7 +91,7 @@ class BooksApp extends React.Component {
           </div>
         )} />
 
-        <Route exact path="/search" render={() => ( <Searchlibrary library={library}/>)} />
+        <Route exact path="/search" render={() => ( <Searchlibrary library={library} moveBook={(bookId, shelf) => (this.moveBook(bookId, shelf))}/>)} />
       
         </div> )
   }

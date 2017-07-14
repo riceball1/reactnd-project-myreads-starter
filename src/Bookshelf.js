@@ -10,13 +10,13 @@ class Bookshelf extends React.Component {
 	}
 
 	render() {
-		const { shelfTitle, books } = this.props
+		const { shelfTitle, books, moveBook } = this.props
 		return (
 		
 	            <div className="list-books-content">
 		              <div className="bookshelf">
               				<h2 className="bookshelf-title">{shelfTitle}</h2>
-		                <Shelf books={books}/>
+		                <Shelf books={books} moveBook={moveBook}/>
 			        </div>
 	        	</div>
 		)
