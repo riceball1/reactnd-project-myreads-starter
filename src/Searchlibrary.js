@@ -63,7 +63,7 @@ class Searchlibrary extends React.Component {
 			          <Link className="close-search" to="/">Close</Link>
 			          <div className="search-books-input-wrapper">
 			            <input type="text" 
-			              placeholder="Search by title or author" 
+			              placeholder="search for books" 
 			              value={query}
 			              onChange={(e)=> this.searchBooks(e.target.value)}
 			             />

@@ -17,7 +17,7 @@ class Book extends React.Component {
       return (
         <div className="book">
           <div className="book-top">
-          <Link to={`/details/${id}`} bookId={id}>
+          <Link to={`/details/${id}`}>
             <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${image}")` }}></div>
             </Link>
             <div className="book-shelf-changer">
