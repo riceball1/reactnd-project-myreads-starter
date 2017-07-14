@@ -31,7 +31,6 @@ class BooksApp extends React.Component {
   }
 
   moveBook(id, newShelf) {
-    console.log(id, newShelf)
     const {library} = this.state;
     BooksAPI.get(id).then((book) => {
       return book
@@ -48,11 +47,17 @@ class BooksApp extends React.Component {
             return item.id === updatedBook.id
           })
           // updated item
-          let newLibrary = [
-         ...library.slice(0,index),
-         updatedBook,
-         ...library.slice(index+1)
-         ]
+          let newLibrary
+          if(index !== -1) {
+            newLibrary = [
+             ...library.slice(0,index),
+             updatedBook,
+             ...library.slice(index+1)
+             ]
+          } else {
+            newLibrary = this.state.library.concat(updatedBook)
+          }
+          
          // updates the state with the new library changes
          this.setState({library: newLibrary})
           return newBooks

@@ -29,7 +29,6 @@ class Searchlibrary extends React.Component {
 		}
 
 		BooksAPI.search(query, 20).then((res) => {
-			console.log('bookapi results:', res)
 			if(res === undefined || res.error === 'empty query') {
 				return this.setState({results: []})
 			}
@@ -41,14 +40,10 @@ class Searchlibrary extends React.Component {
 	clearSearch = (query) => {
 		this.setState({query: "", results: []})
 	}
-	// something happens when searching for 'app' throws an error
-	// in results.map below
-
+	
 	render() {
 		const {moveBook} = this.props
 		const {query, results} = this.state
-		console.log('Searchlibrary', this.props)
-		console.log('Searchlibrary', this.state)
 		
 		let librarycontent
 		if(!results) {
