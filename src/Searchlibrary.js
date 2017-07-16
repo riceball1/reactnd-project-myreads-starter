@@ -15,29 +15,33 @@ class Searchlibrary extends React.Component {
 		moveBook: PropTypes.func.isRequired
 	}
 
-	searchBooks(query) {
-		/** 
-			1) issue after clearing or searching for an item that cannot be found:
-				example: bekey
-				Uncaught (in promise) TypeError: Cannot read property 'thumbnail' of undefined
-			    at http://localhost:3000/static/js/bundle.js:37184:106
-			    at Array.map (native)
-			    at Searchlibrary.render 
-			2) Cannot search for names like 'Game On' sends back empty query error
-
-		**/
+	searchBooks(query, resultLimit=40, library) {
 		this.setState({query: query})
 		if(query === undefined || query === "") {
 			return this.setState({query: "", results: []})
 		}
-
-		BooksAPI.search(query, 20).then((res) => {
-			if(res === undefined || res.error === 'empty query') {
-				return this.setState({results: []})
-			}
-			return this.setState({results: res})
-		})
-		
+		setTimeout(() => {
+				// send a resultLimit for specific # of results returned
+				BooksAPI.search(query, resultLimit)
+					.then((results) => {
+						
+						// filtered results
+						let filteredResults
+						for(let i = 0; i < library.length; i++) {
+							filteredResults =  results.filter((book) => {
+								return book.id !== library[i].id
+							})
+						}
+						console.log(filteredResults.map((book) => (book.id)))
+						// handles empty query or undefined response
+						if(results === undefined || results.error === 'empty query') {
+							return this.setState({results: []})
+						}
+						// set the results in state to the response
+						// console.log(filteredResults)
+						return this.setState({results: filteredResults})
+					})
+			}, 800)
 	}
 
 	clearSearch = (query) => {
@@ -45,18 +49,30 @@ class Searchlibrary extends React.Component {
 	}
 	
 	render() {
-		const {moveBook} = this.props
+		// get variables from props and state
+		const {moveBook, library} = this.props
 		const {query, results} = this.state
-		
+		// console.log(library)
+		// filter out results
+		// let filteredResults
 		let librarycontent
-		if(!results) {
+		if(!results || !query) {
 			librarycontent = []
 		} else {
-			librarycontent = results.map((book, index) => (
-				<Book author={book.authors} image={book.imageLinks.thumbnail} title={book.title} key={book.id + index} optionState={book.shelf} id={book.id} moveBook={moveBook}/>
-			))
+			// filter results so it doesn't contain library books already on shelf
+			// filteredResults = results.filter((book) => {
+			// 	for(let i = 0; i < library.length; i++) {
+			// 		if(book.id !== library[i].id) {
+			// 			return book
+			// 		}
+			// 	}
+			// })
+			librarycontent = results.map((book, index) => {
+				// image handles undefined values return
+				return <Book author={book.authors} image={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail} title={book.title} key={book.id + index} optionState={book.shelf} id={book.id} moveBook={moveBook}/>
+			})
 		}
-	
+		
 		return (
 			<div className="search-books">
 				 <div className="search-books-bar">
@@ -65,12 +81,12 @@ class Searchlibrary extends React.Component {
 			            <input type="text" 
 			              placeholder="search for books" 
 			              value={query}
-			              onChange={(e)=> this.searchBooks(e.target.value)}
+			              onChange={(e)=> this.searchBooks(e.target.value, 30, library)}
 			             />
 			          </div>
 			        </div>
 				<div className="search-books-results">
-						{results.length > 0 && ( <div className="showing-books"><span>Showing <strong>{results.length}</strong> total results</span>
+						{librarycontent.length > 0 && ( <div className="showing-books"><span>Showing <strong>{results.length}</strong> total results</span>
 							<br/>
 						<button onClick={this.clearSearch}>clear search results</button>
 						</div>

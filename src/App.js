@@ -54,8 +54,8 @@ class BooksApp extends React.Component {
             newLibrary = this.state.library.concat(updatedBook)
           }
           
-         // updates the state with the new library changes
-         this.setState({library: newLibrary})
+          // updates the state with the new library changes
+          this.setState({library: newLibrary})
           return newBooks
         })
       })
@@ -69,7 +69,7 @@ class BooksApp extends React.Component {
 
   render() {
     const {library, bookShelves} = this.state;
-
+    console.log(library.map((book) => (book.id)))
     // render each bookshelf and pass down props to children components
     let bookshelves = bookShelves.map((bookshelf, index)=> {
       // used a reg expression - was trying to use an object, but maybe there's a better way to display the shelf names?

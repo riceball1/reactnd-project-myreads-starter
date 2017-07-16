@@ -21,7 +21,7 @@ class Book extends React.Component {
             <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: `url("${image}")` }}></div>
             </Link>
             <div className="book-shelf-changer">
-              <select value={optionState} onChange={(e) => moveBook(e.target.id, e.target.value)} id={id}>
+              <select defaultValue={optionState} onChange={(e) => moveBook(e.target.id, e.target.value)} id={id}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>

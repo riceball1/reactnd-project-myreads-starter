@@ -8,7 +8,6 @@ class Shelf extends React.Component {
 	    books: PropTypes.array.isRequired
 	  }
 
-
 	render() {
 		const {books, moveBook} = this.props
 		let booksList = books.map((book, index) => {
