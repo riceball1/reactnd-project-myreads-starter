@@ -57,11 +57,17 @@ class Searchlibrary extends React.Component {
 		} else {
 	
 			librarycontent = results.map((book, index) => {
-				// currently shelf information is not matching getALL books shelf information
-				console.log(book.shelf, book.title)
+				// set the optionState to either none, or if the book
+				// is on the shelf to that shelf's current state
+				let optionState = 'none'
+				for(let i = 0; i < library.length; i++) {
+					if(book.id === library[i].id) {
+						optionState = library[i].shelf
+					}
+				}
 				// image handles undefined values return
-				return <Book author={book.authors} image={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail} title={book.title} key={book.id + index} optionState={book.shelf} id={book.id} moveBook={moveBook}/>
-			})
+				return <Book author={book.authors} image={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail} title={book.title} key={book.id + index} optionState={optionState} id={book.id} moveBook={moveBook}/>
+				})		
 		}
 		
 		return (
