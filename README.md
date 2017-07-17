@@ -11,6 +11,13 @@
     - `npm start`
     - Check `localhost:3000`
 
+## Using MyReads App:
+- On the main page you will find 3 categories: 'currently reading', 'want to read', 'read'
+- You can select the drop down menu at the right bottom corner of each book to change where on the shelf you would like to put the book, if you select 'none' the book will be removed from the shelves
+- You can select the circle icon with a plus symbol ( + ) on the bottom of the main page to go to the search page, or go to `localhost:3000/search`
+- On the search page you can use the search bar at the top to query for books to add to the shelves, please refer to [SEARCH_TERMS.md](SEARCH_TERMS.md) for details about search terms that will work
+- You can also click on individual book covers to go a specific page that gives more details about that particular book
+
 Other Issues:
 - Currently the production version doesn't produce the correct output:
     - `npm install -g serve`
