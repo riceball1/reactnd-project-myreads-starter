@@ -218,3 +218,7 @@ body, .app {
 .bookdetail-content {
   background: white;
 }
+
+.bookdetail-title {
+  color: #2da7b3;
+}
