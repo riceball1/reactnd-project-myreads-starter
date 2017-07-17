@@ -32,16 +32,14 @@ class Searchlibrary extends React.Component {
 								return book.id !== library[i].id
 							})
 						}
-						console.log(filteredResults.map((book) => (book.id)))
 						// handles empty query or undefined response
 						if(results === undefined || results.error === 'empty query') {
 							return this.setState({results: []})
 						}
 						// set the results in state to the response
-						// console.log(filteredResults)
 						return this.setState({results: filteredResults})
 					})
-			}, 800)
+			}, 400)
 	}
 
 	clearSearch = (query) => {
@@ -52,22 +50,15 @@ class Searchlibrary extends React.Component {
 		// get variables from props and state
 		const {moveBook, library} = this.props
 		const {query, results} = this.state
-		// console.log(library)
-		// filter out results
-		// let filteredResults
+
 		let librarycontent
 		if(!results || !query) {
 			librarycontent = []
 		} else {
-			// filter results so it doesn't contain library books already on shelf
-			// filteredResults = results.filter((book) => {
-			// 	for(let i = 0; i < library.length; i++) {
-			// 		if(book.id !== library[i].id) {
-			// 			return book
-			// 		}
-			// 	}
-			// })
+	
 			librarycontent = results.map((book, index) => {
+				// currently shelf information is not matching getALL books shelf information
+				console.log(book.shelf, book.title)
 				// image handles undefined values return
 				return <Book author={book.authors} image={book.imageLinks === undefined ? "" : book.imageLinks.thumbnail} title={book.title} key={book.id + index} optionState={book.shelf} id={book.id} moveBook={moveBook}/>
 			})

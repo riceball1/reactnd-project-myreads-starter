@@ -15,7 +15,10 @@ class BooksApp extends React.Component {
   // setup bookshelf categories and library state
   state = {
      library: [],
-     bookShelves: [ "currentlyReading","wantToRead", "read"]
+     bookShelves: [ "currentlyReading","wantToRead", "read"],
+     currentlyReading: [],
+     wantToRead: [],
+     read: []
   }
 
   // setup library when component is mounted
@@ -27,39 +30,41 @@ class BooksApp extends React.Component {
 
   // function to move books between categories
   moveBook(id, newShelf) {
+    // get current library from state
     const {library} = this.state;
-    BooksAPI.get(id).then((book) => {
-      return book
-    })
-    .then((book) => {
-      BooksAPI.update(book, newShelf)
-        .then((newBooks) => {
-          BooksAPI.get(id).then((book) => {
+      // update book information
+      BooksAPI
+        .update({id}, newShelf)
+        .then((booksResults) => {
+          // get book object
+          BooksAPI.get(id)
+          .then((book) => {
             return book
-        })
-        // set new state with updated book
-        .then((updatedBook) => {
-          const index = library.findIndex((item) => {
-            return item.id === updatedBook.id
           })
-          // updated item
-          let newLibrary
-          if(index !== -1) {
-            newLibrary = [
-             ...library.slice(0,index),
-             updatedBook,
-             ...library.slice(index+1)
-             ]
-          } else {
-            newLibrary = this.state.library.concat(updatedBook)
-          }
-          
-          // updates the state with the new library changes
-          this.setState({library: newLibrary})
-          return newBooks
+          // set new state with updated book
+          .then((updatedBook) => {
+            console.log('updatedBook', updatedBook.id)
+            const index = library.findIndex((item) => {
+              return item.id === updatedBook.id
+            })
+            // updated item
+            let newLibrary
+            if(index !== -1) {
+              newLibrary = [
+               ...library.slice(0,index),
+               updatedBook,
+               ...library.slice(index+1)
+               ]
+            } else {
+              newLibrary = this.state.library.concat(updatedBook)
+            }
+            
+            // updates the state with the new library changes
+            this.setState({library: newLibrary})
+            return updatedBook
+          })
         })
-      })
-    })
+    // })
     .catch((e) => {
       if(e) {
         console.error('Error message: ', e)
@@ -69,7 +74,6 @@ class BooksApp extends React.Component {
 
   render() {
     const {library, bookShelves} = this.state;
-    console.log(library.map((book) => (book.id)))
     // render each bookshelf and pass down props to children components
     let bookshelves = bookShelves.map((bookshelf, index)=> {
       // used a reg expression - was trying to use an object, but maybe there's a better way to display the shelf names?
